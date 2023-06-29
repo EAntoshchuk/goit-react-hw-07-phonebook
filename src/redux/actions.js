@@ -1,3 +1,4 @@
+import { createAction } from '@reduxjs/toolkit';
 import { nanoid } from 'nanoid';
 
 export const addContact = text => {
@@ -23,3 +24,11 @@ export const setStatusFilter = value => {
     payload: value,
   };
 };
+
+export const fetchContactsRequest = createAction(
+  'contacts/fetchContactsRequest'
+);
+export const fetchContactsSuccess = createAction(
+  'contacts/fetchContactsSuccess'
+);
+export const fetchContactsError = createAction('contacts/fetchContactsError');
