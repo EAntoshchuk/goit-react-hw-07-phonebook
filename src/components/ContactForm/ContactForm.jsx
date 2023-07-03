@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from 'redux/contactSlice';
+import { addContact } from 'redux/contacts-api';
 import { getContactSelector } from 'redux/selectors';
 import css from './ContactForm.module.css';
 
@@ -17,7 +17,10 @@ export default function ContactForm() {
     if (contacts.find(({ name }) => name === newContactName)) {
       alert(`${name} is already in contacts`);
     } else {
-      dispatch(addContact({ name: newContactName, number: newContactNumber }));
+      dispatch(addContact({ name: newContactName, number: newContactNumber }))
+        .unwrap()
+        .then(() => alert(`${name} added to contacts`))
+        .catch(() => alert(`Something went wrong`));
     }
     form.reset();
   };

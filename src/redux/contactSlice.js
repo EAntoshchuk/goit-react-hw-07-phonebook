@@ -1,23 +1,43 @@
-const { createSlice } = require('@reduxjs/toolkit');
+import { createSlice } from '@reduxjs/toolkit';
+import { addContact, deleteContact, fetchContacts } from './contacts-api';
+
+const handlePending = state => {
+  state.loading = true;
+  state.error = null;
+};
+
+const handleRejected = (state, { payload }) => {
+  state.loading = false;
+  state.error = payload;
+};
 
 export const contactSlice = createSlice({
   name: 'contacts',
   initialState: {
     contacts: [],
     filter: '',
+    loading: false,
+    error: null,
   },
-  reducers: {
-    addContact: (state, { payload }) => {
-      state.contacts.push(payload);
-    },
-    deleteContact: (state, { payload }) => {
-      state.contacts = state.contacts.filter(contact => contact.id !== payload);
-    },
-    filterContacts(state, { payload }) {
-      state.filter = payload;
-    },
-  },
+  extraReducers: builder =>
+    builder
+      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.contacts = payload;
+      })
+      .addCase(addContact.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.contacts.push(payload);
+      })
+      .addCase(deleteContact.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        const index = state.contacts.findIndex(
+          contact => contact.id === payload.id
+        );
+        state.contacts.splice(index, 1);
+      })
+      .addMatcher(action => action.type.endsWith('/pending'), handlePending)
+      .addMatcher(action => action.type.endsWith('/rejected'), handleRejected),
 });
 
-export const { addContact, deleteContact, filterContacts } =
-  contactSlice.actions;
+export default contactSlice.reducer;

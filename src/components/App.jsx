@@ -1,8 +1,20 @@
+import { useDispatch, useSelector } from 'react-redux';
 import ContactForm from './ContactForm/ContactForm';
 import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/contacts-api';
+import MagnifyingGlassLodaer from './Loader/Loader';
 
 export default function App() {
+  const {
+    contacts: { loading, error },
+  } = useSelector(state => state);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
   return (
     <div>
       <div
@@ -17,7 +29,7 @@ export default function App() {
           fontSize: '35px',
         }}
       >
-        React
+        React Homework-07 Phonebook
       </div>
       <div
         style={{
@@ -35,6 +47,7 @@ export default function App() {
       >
         <h2 style={{ marginBottom: '20px' }}>Contacts</h2>
         <Filter />
+        {loading && !error && <MagnifyingGlassLodaer />}
         <ContactList />
       </div>
     </div>
