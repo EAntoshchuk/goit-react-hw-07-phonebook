@@ -9,7 +9,7 @@ const getFilteredContacts = (contacts, filter) =>
 
 export default function ContactList() {
   const contacts = useSelector(state => state.contacts.contacts);
-  const filter = useSelector(state => state.contacts.filter);
+  const filter = useSelector(state => state.filter.filter);
   const filteredContacts = getFilteredContacts(contacts, filter);
   return (
     <ul className={css.contacts_list}>

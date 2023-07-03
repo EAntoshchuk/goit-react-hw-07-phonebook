@@ -8,7 +8,7 @@ export default function MagnifyingGlassLodaer() {
         height="80"
         width="80"
         radius="9"
-        color="#4fa94d"
+        color="rgb(1, 127, 184)"
         ariaLabel="three-dots-loading"
         wrapperStyle={{}}
         wrapperClassName=""

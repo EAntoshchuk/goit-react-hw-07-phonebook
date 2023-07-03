@@ -15,7 +15,6 @@ export const contactSlice = createSlice({
   name: 'contacts',
   initialState: {
     contacts: [],
-    filter: '',
     loading: false,
     error: null,
   },
@@ -23,14 +22,17 @@ export const contactSlice = createSlice({
     builder
       .addCase(fetchContacts.fulfilled, (state, { payload }) => {
         state.loading = false;
+        state.error = null;
         state.contacts = payload;
       })
       .addCase(addContact.fulfilled, (state, { payload }) => {
         state.loading = false;
+        state.error = null;
         state.contacts.push(payload);
       })
       .addCase(deleteContact.fulfilled, (state, { payload }) => {
         state.loading = false;
+        state.error = null;
         const index = state.contacts.findIndex(
           contact => contact.id === payload.id
         );
