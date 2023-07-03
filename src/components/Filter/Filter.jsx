@@ -16,6 +16,8 @@ const Filter = () => {
       <input
         className={css.filter_input}
         type="text"
+        name="filter"
+        id="filter"
         value={filter}
         onChange={filterUpdate}
       />

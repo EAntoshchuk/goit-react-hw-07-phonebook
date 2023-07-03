@@ -1,17 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { addContact, deleteContact, fetchContacts } from './contacts-api';
 
-const handlePending = state => {
-  state.loading = true;
-  state.error = null;
-};
-
-const handleRejected = (state, { payload }) => {
-  state.loading = false;
-  state.error = payload;
-};
-
-export const contactSlice = createSlice({
+const contactSlice = createSlice({
   name: 'contacts',
   initialState: {
     contacts: [],
@@ -41,5 +31,15 @@ export const contactSlice = createSlice({
       .addMatcher(action => action.type.endsWith('/pending'), handlePending)
       .addMatcher(action => action.type.endsWith('/rejected'), handleRejected),
 });
+
+const handlePending = state => {
+  state.loading = true;
+  state.error = null;
+};
+
+const handleRejected = (state, { payload }) => {
+  state.loading = false;
+  state.error = payload;
+};
 
 export default contactSlice.reducer;

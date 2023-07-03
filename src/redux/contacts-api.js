@@ -5,7 +5,7 @@ const BASE_URL =
 
 export const fetchContacts = createAsyncThunk(
   'contacts/fetchAll',
-  async (_, rejectWithValue) => {
+  async (_, { rejectWithValue }) => {
     try {
       const response = await fetch(BASE_URL, {
         headers: {
@@ -25,7 +25,7 @@ export const fetchContacts = createAsyncThunk(
 
 export const addContact = createAsyncThunk(
   'contacts/addContact',
-  async (data, rejectWithValue) => {
+  async (data, { rejectWithValue }) => {
     try {
       const response = await fetch(BASE_URL, {
         method: 'POST',
@@ -46,10 +46,10 @@ export const addContact = createAsyncThunk(
 
 export const deleteContact = createAsyncThunk(
   'contacts/deleteContact',
-  async (id, rejectWithValue) => {
+  async (id, { rejectWithValue }) => {
     try {
       const response = await fetch(`${BASE_URL}/${id}`, {
-        method: 'Delete',
+        method: 'DELETE',
       });
       if (!response.ok) {
         throw new Error(response.statusText);
